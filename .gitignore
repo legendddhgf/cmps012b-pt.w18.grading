@@ -50,3 +50,40 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+
+# custom additions #
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see
+# http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# don't commit the answers
+*/example/*
+out*.txt
+diff*.txt
+
+# Don't commit student data
+**/student
+*.autotable
+*.csv
+*grade.txt
+**/mailer
+
+# Don't know if we want moss up
+moss/
+
+# Pair
+PAIR
+
+# edits
+edits/

@@ -1,2 +1,2 @@
-# cmps012b-pt.w18.grading
-Grading Scripts for Patrick Tantalo's Intro to Data Structures class of Winter 2018
+# cmps101-pt.f17.grading
+grading scripts for patrick tantalo's CMPS101 during fall of 2017
