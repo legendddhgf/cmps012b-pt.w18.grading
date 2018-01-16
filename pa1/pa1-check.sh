@@ -1,12 +1,9 @@
 #!/usr/bin/bash
 
 SRCDIR=https://raw.githubusercontent.com/legendddhgf/cmps012b-pt.w18.grading/master/pa1
-NUMTESTS=3
-PNTSPERTEST=5
+NUMTESTS=1
+PNTSPERTEST=6
 let MAXPTS=$NUMTESTS*$PNTSPERTEST
-
-echo "tests not yet ready"
-exit
 
 if [ ! -e backup ]; then
   echo "WARNING: a backup has been created for you in the \"backup\" folder"
@@ -16,37 +13,37 @@ fi
 cp *.java Makefile backup   # copy all files of importance into backup
 
 for NUM in $(seq 1 $NUMTESTS); do
-  curl $SRCDIR/infile$NUM.txt > infile$NUM.txt
+#  curl $SRCDIR/infile$NUM.txt > infile$NUM.txt
   curl $SRCDIR/model-outfile$NUM.txt > model-outfile$NUM.txt
 done
 
-curl $SRCDIR/ModelListTest.java > ModelListTest.java
+curl $SRCDIR/ModelRecursionTest.java > ModelRecursionTest.java
 
 make
 
-if [ ! -e Lex ] || [ ! -x Lex ]; then # exist and executable
+if [ ! -e Recursion ] || [ ! -x Recursion ]; then # exist and executable
   echo ""
   echo "Makefile doesn't correctly create Executable!!!"
   echo ""
   rm -f *.class
-  javac -Xlint Lex.java List.java
-  echo "Main-class: Lex" > Manifest
-  jar cvfm Lex Manifest *.class
+  javac -Xlint Recursion.java
+  echo "Main-class: Recursion" > Manifest
+  jar cvfm Recursion Manifest *.class
   rm Manifest
-  chmod +x Lex
+  chmod +x Recursion
 fi
 
 echo ""
 echo ""
 
-lextestspassed=$(expr 0)
+recursiontestspassed=$(expr 0)
 echo "Please be warned that the following tests discard all output to stdout/stderr"
-echo "Lex tests: If nothing between '=' signs, then test is passed"
+echo "Recursion tests: If nothing between '=' signs, then test is passed"
 echo "Press enter to continue (Type \"v + enter\" for more details)"
 read verbose
 for NUM in $(seq 1 $NUMTESTS); do
   rm -f outfile$NUM.txt
-  timeout 5 Lex infile$NUM.txt outfile$NUM.txt &> garbage >> garbage
+  timeout 5 Recursion &> outfile$NUM.txt >> outfile$NUM.txt
   diff -bBwu outfile$NUM.txt model-outfile$NUM.txt &> diff$NUM.txt >> diff$NUM.txt
   if [ "$verbose" == "v" ]; then
     echo "Test $NUM:"
@@ -55,39 +52,44 @@ for NUM in $(seq 1 $NUMTESTS); do
     echo "=========="
   fi
   if [ -e diff$NUM.txt ] && [[ ! -s diff$NUM.txt ]]; then
-    let lextestspassed+=1
+    let recursiontestspassed+=1
   fi
+  rm *outfile$NUM.txt
 done
 
 echo ""
 echo ""
 
-let lextestpoints=5*lextestspassed
+let lextestpoints=PNTSPERTEST*recursiontestspassed
 
-echo "Passed $lextestspassed / $NUMTESTS Lex tests"
-echo "This gives a total of $lextestpoints / $MAXPTS points"
+echo "Passed $recursiontestspassed / $NUMTESTS Recursion tests"
+echo "This gives a total of $recursiontestpoints / $MAXPTS points"
 
 echo ""
 echo ""
 
 make clean
 
-if [ -e Lex ] || [ -e *.class ]; then
+if [ -e Recursion ] || [ -e *.class ]; then
   echo "WARNING: Makefile didn't successfully clean all files"
 fi
 
 echo ""
 
-echo "Press Enter To Continue with ListTest Results (Type \"v + enter\" for more details)"
+echo "Recursion Unit Tests not yet ready"
+exit
+
+echo "Press Enter To Continue with RecursionTest Results (Type \"v + enter\" for more details)"
 read verbose
 
-javac ModelListTest.java List.java
+javac ModelRecursionTest.java Recursion.java
 if [ "$verbose" == "v" ]; then
-  timeout 5 java ModelListTest -v > ListTest-out.txt &>> ListTest-out.txt
+  timeout 5 java ModelRecursionTest -v > RecursionTest-out.txt &>> RecursionTest-out.txt
 else
-  timeout 5 java ModelListTest > ListTest-out.txt &>> ListTest-out.txt
+  timeout 5 java ModelRecursionTest > RecursionTest-out.txt &>> RecursionTest-out.txt
 fi
 
-cat ListTest-out.txt
+cat RecursionTest-out.txt
+rm RecursionTest-out.txt
 
-rm *.class ModelListTest.java garbage
+rm *.class ModelRecursionTest.java garbage

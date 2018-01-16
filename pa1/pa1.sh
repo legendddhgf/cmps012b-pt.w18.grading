@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 # cmps012b-pt.w18 grading
 # usage: pa1.sh
 # (run within your pa1 directory to test your code)
