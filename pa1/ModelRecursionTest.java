@@ -93,7 +93,7 @@ class ModelListTest {
         // the max value is (magic - 1) and the max index on both sides,
         // regardless of returned index, should contain the same value
         if (A[maxArrayIndex(A, 0, A.length / 2)] !=
-            A[maxArrayIndex(A, A.length / 2 + 1])) return 1;
+            A[maxArrayIndex(A, A.length / 2 + 1)]) return 1;
         A[magic - 1]++; // now the max value should be (magic) at this index
         if (A[maxArrayIndex(A, 0, A.length - 1)] !=
             maxArrayIndex(A, 0, A.length - 1) + 1) return 2;
@@ -115,7 +115,7 @@ class ModelListTest {
         // the min value is -1 * (magic - 1) and the min index on both sides,
         // regardless of returned index, should contain the same value
         if (A[minArrayIndex(A, 0, A.length / 2)] !=
-            A[minArrayIndex(A, A.length / 2 + 1])) return 1;
+            A[minArrayIndex(A, A.length / 2 + 1)]) return 1;
         A[magic - 1]--; // now the min value should be (-magic) at this index
         if (-1 * A[minArrayIndex(A, 0, A.length - 1)] !=
             minArrayIndex(A, 0, A.length - 1) + 1) return 2;

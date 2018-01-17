@@ -76,9 +76,6 @@ fi
 
 echo ""
 
-echo "Recursion Unit Tests not yet ready"
-exit
-
 echo "Press Enter To Continue with RecursionTest Results (Type \"v + enter\" for more details)"
 read verbose
 
