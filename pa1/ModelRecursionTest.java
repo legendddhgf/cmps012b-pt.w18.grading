@@ -1,24 +1,6 @@
+import java.lang.Throwable;
+
 class ModelRecursionTest {
-
-  static void reverseArray1(int A[], int n, int B[]) {
-    Recursion.reverseArray1(A, n, B);
-  }
-
-  static void reverseArray2(int A[], int n, int B[]) {
-    Recursion.reverseArray2(A, n, B);
-  }
-
-  static void reverseArray3(int A[], int i, int j) {
-    Recursion.reverseArray3(A, i, j);
-  }
-
-  static int maxArrayIndex(int A[], int p, int r) {
-    return Recursion.maxArrayIndex(A, p, r);
-  }
-
-  static int minArrayIndex(int A[], int p, int r) {
-    return Recursion.minArrayIndex(A, p, r);
-  }
 
   static int test_count;
 
@@ -43,6 +25,8 @@ class ModelRecursionTest {
 
   public static int runTest(int test) {
 
+    Recursion R = new Recursion();
+
     int A[] = new int[10000];
     int B[] = new int[10000];
 
@@ -51,14 +35,14 @@ class ModelRecursionTest {
         for (int i = 0; i < A.length; i++) {
           A[i] = i + 1;
         }
-        reverseArray1(A, 1, B);
+        R.reverseArray1(A, 1, B);
         // at this point should have copied leftmost to rightmost
         // and hence the next item in B shouldn't be set
         if (A[0] != B[B.length - 1] || B[B.length - 2] != 0) return 1;
-        reverseArray1(A, A.length - 1, B);
+        R.reverseArray1(A, A.length - 1, B);
         // everything copied in except the last item
         if  (A[A.length - 2] != B[1] || B[0] != 0) return 2;
-        reverseArray1(B, B.length, A);
+        R.reverseArray1(B, B.length, A);
         // A as it was except last element is now 0
         for (int i = 0; i < A.length - 1; i++) {
           if (A[i] != i + 1) return 3;
@@ -69,14 +53,14 @@ class ModelRecursionTest {
         for (int i = 0; i < A.length; i++) {
           A[i] = i + 1;
         }
-        reverseArray2(A, 1, B);
+        R.reverseArray2(A, 1, B);
         // at this point should have copied rightmost to leftmost
         // and hence the next item in B shouldn't be set
         if (A[A.length - 1] != B[0] || B[1] != 0) return 1;
-        reverseArray2(A, A.length - 1, B);
+        R.reverseArray2(A, A.length - 1, B);
         // everything copied in except the last item
         if (A[1] != B[B.length - 2] || B[A.length - 1] != 0) return 2;
-        reverseArray2(B, B.length, A);
+        R.reverseArray2(B, B.length, A);
         // A as it was except first element is now 0
         for (int i = 1; i < A.length; i++) {
           if (A[i] != i + 1) return 3;
@@ -86,16 +70,16 @@ class ModelRecursionTest {
         for (int i = 0; i < A.length; i++) {
           A[i] = i + 1;
         }
-        reverseArray3(A, 0, 0);
+        R.reverseArray3(A, 0, 0);
         // should do nothing
         if (A[0] != 1) return 1;
-        reverseArray3(A, 0, 2);
+        R.reverseArray3(A, 0, 2);
         // swap [0] with [2] but leave [1] the same
         if (A[0] != 3 || A[1] != 2 || A[2] != 1) return 2;
-        reverseArray3(A, 0, 3);
+        R.reverseArray3(A, 0, 3);
         // reverses, as you would expect, the first 4 elements
         if (A[0] != 4 || A[1] != 1 || A[2] != 2 || A[3] != 3) return 3;
-        reverseArray3(A, 3, A.length - 1);
+        R.reverseArray3(A, 3, A.length - 1);
         // comprehension left as an excersize to the reader
         for (int i = 1; i < A.length - 4; i++) {
           if (A[A.length - i - 1] != i + 4) return 5;
@@ -110,18 +94,18 @@ class ModelRecursionTest {
         }
         // the max value is (magic - 1) and the max index on both sides,
         // regardless of returned index, should contain the same value
-        if (A[maxArrayIndex(A, 0, A.length / 2)] !=
-            A[maxArrayIndex(A, A.length / 2 + 1, A.length - 1)]) return 1;
+        if (A[R.maxArrayIndex(A, 0, A.length / 2)] !=
+            A[R.maxArrayIndex(A, A.length / 2 + 1, A.length - 1)]) return 1;
         A[magic - 1]++; // now the max value should be (magic) at this index
-        if (A[maxArrayIndex(A, 0, A.length - 1)] !=
-            maxArrayIndex(A, 0, A.length - 1) + 1) return 2;
+        if (A[R.maxArrayIndex(A, 0, A.length - 1)] !=
+            R.maxArrayIndex(A, 0, A.length - 1) + 1) return 2;
         A[magic] = magic + 1; // yet again a new maximum value is born
-        if (A[maxArrayIndex(A, 0, A.length - 1)] !=
-            maxArrayIndex(A, 0, A.length - 1) + 1) return 3;
+        if (A[R.maxArrayIndex(A, 0, A.length - 1)] !=
+            R.maxArrayIndex(A, 0, A.length - 1) + 1) return 3;
         A[A.length / 2] = A.length;
         // You had best not find that value if it's not in the range...
-        if (A[maxArrayIndex(A, 0, A.length / 2 - 1)] == A.length ||
-            A[maxArrayIndex(A, A.length / 2 + 1, A.length - 1)] == A.length)
+        if (A[R.maxArrayIndex(A, 0, A.length / 2 - 1)] == A.length ||
+            A[R.maxArrayIndex(A, A.length / 2 + 1, A.length - 1)] == A.length)
           return 4;
       } else if (test == minArrayIndex_test) {
         // comprehension left as an excersize to the reader
@@ -132,18 +116,18 @@ class ModelRecursionTest {
         }
         // the min value is -1 * (magic - 1) and the min index on both sides,
         // regardless of returned index, should contain the same value
-        if (A[minArrayIndex(A, 0, A.length / 2)] !=
-            A[minArrayIndex(A, A.length / 2 + 1, A.length - 1)]) return 1;
+        if (A[R.minArrayIndex(A, 0, A.length / 2)] !=
+            A[R.minArrayIndex(A, A.length / 2 + 1, A.length - 1)]) return 1;
         A[magic - 1]--; // now the min value should be (-magic) at this index
-        if (-1 * A[minArrayIndex(A, 0, A.length - 1)] !=
-            minArrayIndex(A, 0, A.length - 1) + 1) return 2;
+        if (-1 * A[R.minArrayIndex(A, 0, A.length - 1)] !=
+            R.minArrayIndex(A, 0, A.length - 1) + 1) return 2;
         A[magic] = -1 * (magic + 1); // yet again a new minimum value is born
-        if (-1 * A[minArrayIndex(A, 0, A.length - 1)] !=
-            minArrayIndex(A, 0, A.length - 1) + 1) return 3;
+        if (-1 * A[R.minArrayIndex(A, 0, A.length - 1)] !=
+            R.minArrayIndex(A, 0, A.length - 1) + 1) return 3;
         A[A.length / 2] = -1 * A.length;
         // You had best not find that value if it's not in the range...
-        if (A[minArrayIndex(A, 0, A.length / 2 - 1)] == -1 * A.length ||
-            A[minArrayIndex(A, A.length / 2 + 1, A.length - 1)] == -1 * A.length)
+        if (A[R.minArrayIndex(A, 0, A.length / 2 - 1)] == -1 * A.length ||
+            A[R.minArrayIndex(A, A.length / 2 + 1, A.length - 1)] == -1 * A.length)
           return 4;
       }
     } catch (Exception e) {
@@ -152,6 +136,12 @@ class ModelRecursionTest {
             testName(test) + " With an exception of:\n");
         e.printStackTrace();
         System.out.println();
+      }
+      return 255;
+    } catch (StackOverflowError s) {
+      if (verbose) {
+        System.out.println("\nUnfortunately your program crashed on test " +
+            testName(test) + " With a stack overflow error\n");
       }
       return 255;
     }
@@ -206,7 +196,7 @@ class ModelRecursionTest {
     final int maxScore = 75;
     final int charity = 10;
 
-    int totalPoints = (maxScore - test_count) + tests_passed;
+    int totalPoints = (maxScore - test_count * 15) + tests_passed * 15;
     if (test_status == 255) { // your code had an exception
       totalPoints = charity;
     }
