@@ -27,8 +27,8 @@ class ModelRecursionTest {
 
     Recursion R = new Recursion();
 
-    int A[] = new int[10000];
-    int B[] = new int[10000];
+    int A[] = new int[1000];
+    int B[] = new int[1000];
 
     try {
       if (test == reverseArray1_test) {
