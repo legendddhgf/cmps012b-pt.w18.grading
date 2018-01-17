@@ -60,7 +60,7 @@ done
 echo ""
 echo ""
 
-let lextestpoints=PNTSPERTEST*recursiontestspassed
+let lextestpoints=$PNTSPERTEST*$recursiontestspassed
 
 echo "Passed $recursiontestspassed / $NUMTESTS Recursion tests"
 echo "This gives a total of $recursiontestpoints / $MAXPTS points"
