@@ -6,57 +6,19 @@ class ModelListTest {
 
   static boolean verbose;
 
-  static int Empty_length;
-  static int Append_length;
-  static int Prepend_length;
-  static int InsertBefore_length;
-  static int DeleteFront_equals;
+  static int reverseArray1_test;
+  static int reverseArray2_test;
+  static int reverseArray3_test;
+  static int maxArrayIndex_test;
+  static int minArrayIndex_test;
 
   static String testName(int test) {
-    if (test == Empty_length) return "Empty_length";
-    if (test == Append_length) return "Append_length";
-    if (test == Prepend_length) return "Prepend_length";
-    if (test == InsertAfter_length) return "InsertAfter_length";
-    if (test == InsertBefore_length) return "InsertBefore_length";
-    if (test == DeleteFront_length) return "DeleteFront_length";
-    if (test == DeleteBack_length) return "DeleteBack_length";
-    if (test == Delete_length) return "Delete_length";
 
-    if (test == EmptyList_index) return "EmptyList_index";
-    if (test == MoveFront_index) return "MoveFront_index";
-    if (test == MoveBack_index) return "MoveBack_index";
-    if (test == MoveNext_index) return "MoveNext_index";
-    if (test == MovePrev_index) return "MovePrev_index";
-    if (test == Append_index) return "Append_index";
-    if (test == Prepend_index) return "Prepend_index";
-    if (test == InsertAfter_index) return "InsertAfter_index";
-    if (test == InsertBefore_index) return "InsertBefore_index";
-    if (test == DeleteFront_index) return "DeleteFront_index";
-    if (test == DeleteBack_index) return "DeleteBack_index";
-    if (test == Delete_index) return "Delete_index";
-
-    if (test == Append_equals) return "Append_equals";
-    if (test == Prepend_equals) return "Prepend_equals";
-    if (test == InsertAfter_equals) return "InsertAfter_equals";
-    if (test == InsertBefore_equals) return "InsertBefore_equals";
-    if (test == DeleteFront_equals) return "DeleteFront_equals";
-    if (test == DeleteBack_equals) return "DeleteBack_equals";
-    if (test == Delete_equals) return "Delete_equals";
-
-    if (test == Empty_clear) return "Empty_clear";
-    if (test == NonEmpty_clear) return "NonEmpty_clear";
-
-    if (test == Set_get) return "Set_get";
-    if (test == Set_front) return "Set_front";
-    if (test == NonEmpty_front) return "NonEmpty_front";
-    if (test == Set_back) return "Set_back";
-    if (test == NonEmpty_back) return "NonEmpty_back";
-
-    if (test == Empty_copy) return "Empty_copy";
-    if (test == NonEmpty_copy) return "NonEmpty_copy";
-
-    if (test == Empty_toString) return "Empty_toString";
-    if (test == NonEmpty_toString) return "NonEmpty_toString";
+    if (test == reverseArray1_test) return "reverseArray1_test";
+    if (test == reverseArray2_test) return "reverseArray2_test";
+    if (test == reverseArray3_test) return "reverseArray3_test";
+    if (test == maxArrayIndex_test) return "maxArrayIndex_test";
+    if (test == minArrayIndex_test) return "minArrayIndex_test";
 
     return "";
   }
@@ -67,52 +29,104 @@ class ModelListTest {
     int B[] = new int[10000];
 
     try {
-      if (test == Empty_length) {
-        A = new List();
-        if (A.length() != 0) return 1;
-      } else if (test == Append_length) {
-        A = new List();
-        A.append(1);
-        A.append(2);
-        A.append(3);
-        A.append(5);
-        if (A.length() != 4) return 1;
-      } else if (test == Prepend_length) {
-        A = new List();
-        A.prepend(6);
-        A.prepend(4);
-        A.prepend(2);
-        A.prepend(1);
-        if (A.length() != 4) return 1;
-      } else if (test == InsertAfter_length) {
-        A = new List();
-        A.append(1);
-        A.append(2);
-        A.append(3);
-        A.append(5);
-        A.moveFront();
-        A.insertAfter(12);
-        if (A.length() != 5) return 1;
-      } else if (test == InsertBefore_length) {
-        A = new List();
-        A.prepend(76);
-        A.prepend(4);
-        A.prepend(3);
-        A.prepend(1);
-        A.moveFront();
-        A.insertBefore(115);
-        if (A.length() != 5) return 1;
-      } else if (test == DeleteFront_length) {
-        A = new List();
-        A.prepend(76);
-        A.prepend(4);
-        A.deleteFront();
-        A.prepend(3);
-        A.prepend(1);
-        A.moveFront();
-        A.insertBefore(115);
-        A.deleteFront();
-        if (A.length() != 3) return 1;
+      if (test == reverseArray1_test) {
+        for (int i = 0; i < A.length; i++) {
+          A[i] = i + 1;
+        }
+        Recursion.reverseArray1(A, 1, B);
+        // at this point should have copied leftmost to rightmost
+        // and hence the next item in B shouldn't be set
+        if (A[0] != B[B.length - 1] || B[B.length - 2] != 0) return 1;
+        Recursion.reverseArray1(A, A.length - 1, B);
+        // everything copied in except the last item
+        if  (A[A.length - 2] != B[1] || B[0] != 0) return 2;
+        Recursion.reverseArray1(B, B.length, A);
+        // A as it was except last element is now 0
+        for (int i = 0; i < A.length - 1; i++) {
+          if (A[i] != i + 1) return 3;
+        }
+        if (A[A.length - 1] != 0) return 4;
+      } else if (test == reverseArray2_test) {
+        // inverse conditionals relative to previous test
+        for (int i = 0; i < A.length; i++) {
+          A[i] = i + 1;
+        }
+        Recursion.reverseArray2(A, 1, B);
+        // at this point should have copied rightmost to leftmost
+        // and hence the next item in B shouldn't be set
+        if (A[A.length - 1] != B[0] || B[1] != 0) return 1;
+        Recursion.reverseArray2(A, A.length - 1, B);
+        // everything copied in except the last item
+        if (A[1] != B[B.length - 2] || B[A.length - 1] != 0) return 2;
+        Recursion.reverseArray2(B, B.length, A);
+        // A as it was except first element is now 0
+        for (int i = 1; i < A.length; i++) {
+          if (A[i] != i + 1) return 3;
+        }
+        if (A[0] != 0) return 4;
+      } else if (test == reverseArray3_test) {
+        for (int i = 0; i < A.length; i++) {
+          A[i] = i + 1;
+        }
+        Recursion.reverseArray3(A, 0, 0);
+        // should do nothing
+        if (A[0] != 1) return 1;
+        Recursion.reverseArray3(A, 0, 2);
+        // swap [0] with [2] but leave [1] the same
+        if (A[0] != 3 || A[1] != 2 || A[2] != 1) return 2;
+        Recursion.reverseArray3(A, 0, 3);
+        // reverses, as you would expect, the first 4 elements
+        if (A[0] != 4 || A[1] != 1 || A[2] != 2 || A[3] != 3) return 3;
+        Recursion.reverseArray3(A, 3, A.length - 1);
+        // comprehension left as an excersize to the reader
+        for (int i = 1; i < A.length - 4; i++) {
+          if (A[A.length - i - 1] != i + 4) return 5;
+        }
+        if (A[3] != A.length || A[A.length - 1] != 3) return 4;
+      } else if (test == maxArrayIndex_test) {
+        // comprehension left as an excersize to the reader
+        // because a magician shouldn't reveal his secrets
+        final int magic = Math.ceil(Math.sqrt(A.length));
+        for (int i = 0; i < A.length; i++) {
+          A[i] = i % magic;
+        }
+        // the max value is (magic - 1) and the max index on both sides,
+        // regardless of returned index, should contain the same value
+        if (A[maxArrayIndex(A, 0, A.length / 2)] !=
+            A[maxArrayIndex(A, A.length / 2 + 1])) return 1;
+        A[magic - 1]++; // now the max value should be (magic) at this index
+        if (A[maxArrayIndex(A, 0, A.length - 1)] !=
+            maxArrayIndex(A, 0, A.length - 1) + 1) return 2;
+        A[magic] = magic + 1; // yet again a new maximum value is born
+        if (A[maxArrayIndex(A, 0, A.length - 1)] !=
+            maxArrayIndex(A, 0, A.length - 1) + 1) return 3;
+        A[A.length / 2] = A.length;
+        // You had best not find that value if it's not in the range...
+        if (A[maxArrayIndex(A, 0, A.length / 2 - 1)] == A.length ||
+            A[maxArrayIndex(A, A.length / 2 + 1, A.length - 1)] == A.length)
+          return 4;
+      } else if (test == minArrayIndex_test) {
+        // comprehension left as an excersize to the reader
+        // because a magician shouldn't reveal his secrets
+        final int magic = Math.ceil(Math.sqrt(A.length));
+        for (int i = 0; i < A.length; i++) {
+          A[i] = -1 * (i % magic);
+        }
+        // the min value is -1 * (magic - 1) and the min index on both sides,
+        // regardless of returned index, should contain the same value
+        if (A[minArrayIndex(A, 0, A.length / 2)] !=
+            A[minArrayIndex(A, A.length / 2 + 1])) return 1;
+        A[magic - 1]--; // now the min value should be (-magic) at this index
+        if (-1 * A[minArrayIndex(A, 0, A.length - 1)] !=
+            minArrayIndex(A, 0, A.length - 1) + 1) return 2;
+        A[magic] = -1 * (magic + 1); // yet again a new minimum value is born
+        if (-1 * A[minArrayIndex(A, 0, A.length - 1)] !=
+            minArrayIndex(A, 0, A.length - 1) + 1) return 3;
+        A[A.length / 2] = -1 * A.length;
+        // You had best not find that value if it's not in the range...
+        if (A[minArrayIndex(A, 0, A.length / 2 - 1)] == -1 * A.length ||
+            A[minArrayIndex(A, A.length / 2 + 1, A.length - 1)] == -1 * A.length)
+          return 4;
       }
     } catch (Exception e) {
       if (verbose) {
@@ -136,51 +150,13 @@ class ModelListTest {
     if (args.length == 1) verbose = true;
 
     test_count = 0;
+
     // form is TESTCASE_FUNCTION
-    Empty_length = test_count++;
-    Append_length = test_count++;
-    Prepend_length = test_count++;
-    InsertAfter_length = test_count++;
-    InsertBefore_length = test_count++;
-    DeleteFront_length = test_count++;
-    DeleteBack_length = test_count++;
-    Delete_length = test_count++;
-
-    EmptyList_index = test_count++;
-    MoveFront_index = test_count++;
-    MoveBack_index = test_count++;
-    MoveNext_index = test_count++;
-    MovePrev_index = test_count++;
-    Append_index = test_count++;
-    Prepend_index = test_count++;
-    InsertAfter_index = test_count++;
-    InsertBefore_index = test_count++;
-    DeleteFront_index = test_count++;
-    DeleteBack_index = test_count++;
-    Delete_index = test_count++;
-
-    Append_equals = test_count++;
-    Prepend_equals = test_count++;
-    InsertAfter_equals = test_count++;
-    InsertBefore_equals = test_count++;
-    DeleteFront_equals = test_count++;
-    DeleteBack_equals = test_count++;
-    Delete_equals = test_count++;
-
-    Empty_clear = test_count++;
-    NonEmpty_clear = test_count++;
-
-    Set_get = test_count++;
-    Set_front = test_count++;
-    NonEmpty_front = test_count++;
-    Set_back = test_count++;
-    NonEmpty_back = test_count++;
-
-    Empty_copy = test_count++;
-    NonEmpty_copy = test_count++;
-
-    Empty_toString = test_count++;
-    NonEmpty_toString = test_count++;
+    reverseArray1_test = test_count++;
+    reverseArray2_test = test_count++;
+    reverseArray3_test = test_count++;
+    maxArrayIndex_test = test_count++;
+    minArrayIndex_test = test_count++;
 
     int tests_passed = 0;
     if (verbose)
