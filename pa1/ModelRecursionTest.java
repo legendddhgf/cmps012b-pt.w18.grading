@@ -1,6 +1,24 @@
-import java.util.BitSet;
+class ModelRecursionTest {
 
-class ModelListTest {
+  static void reverseArray1(int A[], int n, int B[]) {
+    Recursion.reverseArray1(A, n, B);
+  }
+
+  static void reverseArray2(int A[], int n, int B[]) {
+    Recursion.reverseArray2(A, n, B);
+  }
+
+  static void reverseArray3(int A[], int i, int j) {
+    Recursion.reverseArray3(A, i, j);
+  }
+
+  static int maxArrayIndex(int A[], int p, int r) {
+    return Recursion.maxArrayIndex(A, p, r);
+  }
+
+  static int minArrayIndex(int A[], int p, int r) {
+    return Recursion.minArrayIndex(A, p, r);
+  }
 
   static int test_count;
 
@@ -33,14 +51,14 @@ class ModelListTest {
         for (int i = 0; i < A.length; i++) {
           A[i] = i + 1;
         }
-        Recursion.reverseArray1(A, 1, B);
+        reverseArray1(A, 1, B);
         // at this point should have copied leftmost to rightmost
         // and hence the next item in B shouldn't be set
         if (A[0] != B[B.length - 1] || B[B.length - 2] != 0) return 1;
-        Recursion.reverseArray1(A, A.length - 1, B);
+        reverseArray1(A, A.length - 1, B);
         // everything copied in except the last item
         if  (A[A.length - 2] != B[1] || B[0] != 0) return 2;
-        Recursion.reverseArray1(B, B.length, A);
+        reverseArray1(B, B.length, A);
         // A as it was except last element is now 0
         for (int i = 0; i < A.length - 1; i++) {
           if (A[i] != i + 1) return 3;
@@ -51,14 +69,14 @@ class ModelListTest {
         for (int i = 0; i < A.length; i++) {
           A[i] = i + 1;
         }
-        Recursion.reverseArray2(A, 1, B);
+        reverseArray2(A, 1, B);
         // at this point should have copied rightmost to leftmost
         // and hence the next item in B shouldn't be set
         if (A[A.length - 1] != B[0] || B[1] != 0) return 1;
-        Recursion.reverseArray2(A, A.length - 1, B);
+        reverseArray2(A, A.length - 1, B);
         // everything copied in except the last item
         if (A[1] != B[B.length - 2] || B[A.length - 1] != 0) return 2;
-        Recursion.reverseArray2(B, B.length, A);
+        reverseArray2(B, B.length, A);
         // A as it was except first element is now 0
         for (int i = 1; i < A.length; i++) {
           if (A[i] != i + 1) return 3;
@@ -68,16 +86,16 @@ class ModelListTest {
         for (int i = 0; i < A.length; i++) {
           A[i] = i + 1;
         }
-        Recursion.reverseArray3(A, 0, 0);
+        reverseArray3(A, 0, 0);
         // should do nothing
         if (A[0] != 1) return 1;
-        Recursion.reverseArray3(A, 0, 2);
+        reverseArray3(A, 0, 2);
         // swap [0] with [2] but leave [1] the same
         if (A[0] != 3 || A[1] != 2 || A[2] != 1) return 2;
-        Recursion.reverseArray3(A, 0, 3);
+        reverseArray3(A, 0, 3);
         // reverses, as you would expect, the first 4 elements
         if (A[0] != 4 || A[1] != 1 || A[2] != 2 || A[3] != 3) return 3;
-        Recursion.reverseArray3(A, 3, A.length - 1);
+        reverseArray3(A, 3, A.length - 1);
         // comprehension left as an excersize to the reader
         for (int i = 1; i < A.length - 4; i++) {
           if (A[A.length - i - 1] != i + 4) return 5;
@@ -86,14 +104,14 @@ class ModelListTest {
       } else if (test == maxArrayIndex_test) {
         // comprehension left as an excersize to the reader
         // because a magician shouldn't reveal his secrets
-        final int magic = Math.ceil(Math.sqrt(A.length));
+        int magic = (int) Math.ceil(Math.sqrt((double) A.length));
         for (int i = 0; i < A.length; i++) {
           A[i] = i % magic;
         }
         // the max value is (magic - 1) and the max index on both sides,
         // regardless of returned index, should contain the same value
         if (A[maxArrayIndex(A, 0, A.length / 2)] !=
-            A[maxArrayIndex(A, A.length / 2 + 1)]) return 1;
+            A[maxArrayIndex(A, A.length / 2 + 1, A.length - 1)]) return 1;
         A[magic - 1]++; // now the max value should be (magic) at this index
         if (A[maxArrayIndex(A, 0, A.length - 1)] !=
             maxArrayIndex(A, 0, A.length - 1) + 1) return 2;
@@ -108,14 +126,14 @@ class ModelListTest {
       } else if (test == minArrayIndex_test) {
         // comprehension left as an excersize to the reader
         // because a magician shouldn't reveal his secrets
-        final int magic = Math.ceil(Math.sqrt(A.length));
+        int magic = (int) Math.ceil(Math.sqrt((double) A.length));
         for (int i = 0; i < A.length; i++) {
           A[i] = -1 * (i % magic);
         }
         // the min value is -1 * (magic - 1) and the min index on both sides,
         // regardless of returned index, should contain the same value
         if (A[minArrayIndex(A, 0, A.length / 2)] !=
-            A[minArrayIndex(A, A.length / 2 + 1)]) return 1;
+            A[minArrayIndex(A, A.length / 2 + 1, A.length - 1)]) return 1;
         A[magic - 1]--; // now the min value should be (-magic) at this index
         if (-1 * A[minArrayIndex(A, 0, A.length - 1)] !=
             minArrayIndex(A, 0, A.length - 1) + 1) return 2;
@@ -158,11 +176,12 @@ class ModelListTest {
     maxArrayIndex_test = test_count++;
     minArrayIndex_test = test_count++;
 
+    int test_status = 0;
     int tests_passed = 0;
     if (verbose)
       System.out.println("\nList of tests passed/failed:\n");
     for (int i = 0; i < test_count; i++) {
-      int test_status = runTest(i);
+      test_status = runTest(i);
       if (verbose)
         System.out.printf("%s %s", testName(i),
             test_status == 0 ? "PASSED" : "FAILED");

@@ -54,13 +54,13 @@ for NUM in $(seq 1 $NUMTESTS); do
   if [ -e diff$NUM.txt ] && [[ ! -s diff$NUM.txt ]]; then
     let recursiontestspassed+=1
   fi
-  rm *outfile$NUM.txt
+  rm -f *outfile$NUM.txt
 done
 
 echo ""
 echo ""
 
-let lextestpoints=$PNTSPERTEST*$recursiontestspassed
+let recursiontestpoints=$PNTSPERTEST*$recursiontestspassed
 
 echo "Passed $recursiontestspassed / $NUMTESTS Recursion tests"
 echo "This gives a total of $recursiontestpoints / $MAXPTS points"
@@ -87,6 +87,6 @@ else
 fi
 
 cat RecursionTest-out.txt
-rm RecursionTest-out.txt
+rm -f RecursionTest-out.txt
 
-rm *.class ModelRecursionTest.java garbage
+rm -f *.class ModelRecursionTest.java garbage
