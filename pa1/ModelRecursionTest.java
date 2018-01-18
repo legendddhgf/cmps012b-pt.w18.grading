@@ -201,7 +201,7 @@ class ModelRecursionTest {
       totalPoints = charity;
     }
 
-    System.out.printf("\nThis gives you a score of %d out of %d " +
+    System.out.printf("\nThis gives you a score of %d / %d " +
         "for this component of the assignment\n\n", totalPoints, maxScore);
   }
 }

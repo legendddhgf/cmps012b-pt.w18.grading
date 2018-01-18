@@ -20,11 +20,15 @@ After installation, you can run the script with this line:
 ./pa1.sh
 ```
 
-The tests will print out the difference between your output and the correct
-output, using the `diff -bBwu` command. Lack of any output between the set of
-"==========" means that your program is running correctly. Any lines prefixed
-with `-` are from your own output, and are incorrect. Any lines prefixed with
-`+` are from the correct output, and are missing in your output.
+The tests will first print out the difference between your output and the
+correct output, using the `diff -bBwu` command. Lack of any output between the
+set of "==========" means that your program is running correctly. Any lines
+prefixed with `-` are from your own output, and are incorrect. Any lines
+prefixed with `+` are from the correct output, and are missing in your output.
+
+Next the tests will include 5 unit tests from ModelRecursionTest.java which will
+provide information on which tests were passed / whether you had an exception
+in your code / your final score for the unit tests
 
 ## Removal
 
