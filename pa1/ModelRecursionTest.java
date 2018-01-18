@@ -82,9 +82,9 @@ class ModelRecursionTest {
         R.reverseArray3(A, 3, A.length - 1);
         // comprehension left as an excersize to the reader
         for (int i = 1; i < A.length - 4; i++) {
-          if (A[A.length - i - 1] != i + 4) return 5;
+          if (A[A.length - i - 1] != i + 4) return 4;
         }
-        if (A[3] != A.length || A[A.length - 1] != 3) return 4;
+        if (A[3] != A.length || A[A.length - 1] != 3) return 5;
       } else if (test == maxArrayIndex_test) {
         // comprehension left as an excersize to the reader
         // because a magician shouldn't reveal his secrets
