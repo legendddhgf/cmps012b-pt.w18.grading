@@ -127,4 +127,4 @@ fi
 
 rm -f *out.txt *Work.txt
 
-rm -f *.class ModelMergeTest.java garbage*
+rm -f *.class Model*MergeTest.java garbage*
