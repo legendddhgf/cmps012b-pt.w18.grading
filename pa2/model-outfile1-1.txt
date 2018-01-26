@@ -1,0 +1,1 @@
+Usage: Search file target1 [target2 ..]
