@@ -28,9 +28,10 @@ prefixed with `+` are from the correct output, and are missing in your output.
 Note that if you use the easy method you will lose 10 points and be warned
 accordingly.
 
-Next the tests will include x unit tests from ModelMergeTest.java which will
+Next the tests will include 5 unit tests from Model*MergeTest.java which will
 provide information on which tests were passed / whether you had an exception
-in your code / your final score for the unit tests
+in your code / your final score for the unit tests. It should autodetect which
+function prototypes you used and work similarly regardless of which you chose.
 
 ## Removal
 
