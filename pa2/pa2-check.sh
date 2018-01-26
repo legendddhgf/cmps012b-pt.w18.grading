@@ -23,11 +23,13 @@ done
 curl $SRCDIR/ModelNormalMergeTest.java > ModelNormalMergeTest.java
 curl $SRCDIR/ModelEasyMergeTest.java > ModelEasyMergeTest.java
 
-make
+# can't run your makefile because you aren't supposed to compile everything,
+# don't worry, we look at it manually anyway
+#make
 
 if [ ! -e Search ] || [ ! -x Search ]; then # exist and executable
-  echo ""
-  echo "Makefile doesn't correctly create Executable!!!"
+  #echo ""
+  #echo "Makefile doesn't correctly create Executable!!!"
   echo ""
   rm -f *.class
   javac -Xlint Search.java
@@ -91,7 +93,6 @@ if [ "$searchuseseasymethod" -ne "0" ]; then
   echo "Be aware that your search tests were marked down 10 points for using the easy method"
 fi
 echo "This gives a total of $searchtestpoints / $MAXPTS points"
-
 
 echo ""
 echo ""
