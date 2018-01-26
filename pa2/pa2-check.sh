@@ -20,7 +20,8 @@ for NUM in $(seq 1 $NUMTESTS); do
   done
 done
 
-curl $SRCDIR/ModelSearchTest.java > ModelSearchTest.java
+curl $SRCDIR/ModelNormalMergeTest.java > ModelNormalMergeTest.java
+curl $SRCDIR/ModelEasyMergeTest.java > ModelEasyMergeTest.java
 
 make
 
@@ -103,24 +104,26 @@ fi
 
 echo ""
 echo ""
-echo "MergeTests not yet ready"
-exit
-
-echo ""
 
 echo "Press Enter To Continue with MergeTest Results"
 read verbose
 
-javac ModelMergeTest.java Merge.java
-if [ "$verbose" == "v" ]; then
-  timeout 5 java ModelMergeTest -v > MergeTest-out.txt &>> MergeTest-out.txt
+javac ModelNormalMergeTest.java Search.java > garbage1 &>> garbage1
+javac ModelEasyMergeTest.java Search.java >> garbage2 &>> garbage2
+echo "testing123" >> NormalMergeTestsWork.txt
+echo "testing123" >> EasyMergeTestsWork.txt
+timeout 5 java ModelNormalMergeTest -v > NormalMergeTest-out.txt &>> NormalMergeTest-out.txt
+timeout 5 java ModelEasyMergeTest -v > EasyMergeTest-out.txt &>> EasyMergeTest-out.txt
+
+if [[ ! -s EasyMergeTestsWork.txt ]]; then
+  cat EasyMergeTest-out.txt
+elif [[ ! -s NormalMergeTestsWork.txt ]]; then
+  cat NormalMergeTest-out.txt
 else
-  #timeout 5 java ModelMergeTest > MergeTest-out.txt &>> MergeTest-out.txt
-  # because the two tend not to be consistent with each other
-  timeout 5 java ModelMergeTest -v > MergeTest-out.txt &>> MergeTest-out.txt
+  echo "Unit tests do not compile, here are errors for the normal merge test:"
+  cat garbage1
 fi
 
-cat MergeTest-out.txt
-rm -f MergeTest-out.txt
+rm -f *out.txt *Work.txt
 
-rm -f *.class ModelMergeTest.java garbage
+rm -f *.class ModelMergeTest.java garbage*
