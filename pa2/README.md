@@ -41,5 +41,5 @@ script, use the following. Note that the script leaves the backup folder for you
 and you may choose to delete it if you like.
 
 ```bash
-rm -f pa2.sh backup
+rm -rf pa2.sh backup
 ```
