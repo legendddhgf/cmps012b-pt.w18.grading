@@ -35,9 +35,6 @@ fi
 echo ""
 echo ""
 
-echo "Dictionary Unit tests not yet ready"
-exit
-
 echo "Press Enter To Continue with DictionaryTest Results"
 read verbose
 
