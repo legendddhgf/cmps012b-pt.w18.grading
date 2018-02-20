@@ -1,11 +1,8 @@
 #!/usr/bin/bash
 
-echo "Tests not yet ready"
-exit
-
 SRCDIR=https://raw.githubusercontent.com/legendddhgf/cmps012b-pt.w18.grading/master/pa4
-NUMTESTS=10
-PNTSPERTEST=X
+NUMTESTS=11
+PNTSPERTEST=5
 let MAXPTS=$NUMTESTS*$PNTSPERTEST
 
 if [ ! -e backup ]; then
@@ -17,11 +14,11 @@ cp *.java Makefile backup   # copy all files of importance into backup
 
 for NUM in $(seq 1 $NUMTESTS); do
   curl $SRCDIR/infile$NUM.txt > infile$NUM.txt
-  curl $SRCDIR/model-rpt$NUM.txt > model-tpt$NUM.txt
+  curl $SRCDIR/model-rpt$NUM.txt > model-rpt$NUM.txt
   curl $SRCDIR/model-trc$NUM.txt > model-trc$NUM.txt
 done
 
-curl $SRCDIR/ModelQueueTest.java > ModelQueueTest.java
+#curl $SRCDIR/ModelQueueTest.java > ModelQueueTest.java
 
 echo ""
 echo ""
@@ -68,12 +65,15 @@ for NUM in $(seq 1 $NUMTESTS); do
     let simulationtestspassed+=1
   fi
 
-  rm -f infile$NUM *outfile$NUM* diff*$NUM
+  #rm -f infile$NUM *outfile$NUM* diff*$NUM
 
 done
 
 echo ""
 echo ""
+
+echo QueueTest not yet ready
+exit
 
 let simulationtestpoints=$PNTSPERTEST*$simulationtestspassed
 
