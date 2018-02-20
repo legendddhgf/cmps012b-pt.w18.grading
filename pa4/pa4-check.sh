@@ -72,9 +72,6 @@ done
 echo ""
 echo ""
 
-echo QueueTest not yet ready
-exit
-
 let simulationtestpoints=$PNTSPERTEST*$simulationtestspassed
 
 echo "Passed $simulationtestspassed / $NUMTESTS Simulation tests"
@@ -91,6 +88,9 @@ fi
 
 echo ""
 echo ""
+
+echo QueueTest not yet ready
+exit
 
 echo "Press Enter To Continue with QueueTest Results"
 read verbose

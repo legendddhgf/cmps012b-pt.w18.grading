@@ -1,4 +1,4 @@
-Report file: infile1.txt.rpt
+Report file: infile2.txt.rpt
 4 Jobs:
 (3, 5, *) (4, 6, *) (5, 5, *) (7, 1, *) 
 
