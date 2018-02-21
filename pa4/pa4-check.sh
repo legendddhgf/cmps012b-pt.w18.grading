@@ -18,7 +18,7 @@ for NUM in $(seq 1 $NUMTESTS); do
   curl $SRCDIR/model-trc$NUM.txt > model-trc$NUM.txt
 done
 
-#curl $SRCDIR/ModelQueueTest.java > ModelQueueTest.java
+curl $SRCDIR/ModelQueueTest.java > ModelQueueTest.java
 
 echo ""
 echo ""
@@ -65,7 +65,7 @@ for NUM in $(seq 1 $NUMTESTS); do
     let simulationtestspassed+=1
   fi
 
-  #rm -f infile$NUM *outfile$NUM* diff*$NUM
+  rm -f infile$NUM *outfile$NUM* diff*$NUM
 
 done
 
@@ -84,13 +84,11 @@ make clean
 
 if [ -e Simulation ] || [ -e *.class ]; then
   echo "WARNING: Makefile didn't successfully clean all files"
+  rm -f Simulation *.class
 fi
 
 echo ""
 echo ""
-
-echo QueueTest not yet ready
-exit
 
 echo "Press Enter To Continue with QueueTest Results"
 read verbose
@@ -101,7 +99,6 @@ cat garbage
 timeout 5 java ModelQueueTest -v > QueueTest-out.txt &>> QueueTest-out.txt
 cat QueueTest-out.txt
 
+rm -f *out.txt
 
-rm -f *out.txt *Work.txt
-
-rm -f *.class ModelQueueTest.java garbage*
+rm -f *.class ModelQueueTest* garbage*

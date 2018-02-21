@@ -7,103 +7,129 @@ class ModelQueueTest {
 
   static boolean verbose;
 
-  static int merge_test1;
-  static int merge_test2;
-  static int mergeSort_test1;
-  static int mergeSort_test2;
-  static int mergeSort_test3;
+  static int easy_test;
+  static int medium_test;
+  static int hard_test;
+  static int breaker_test;
+  static int exception_test;
 
   static String testName(int test) {
 
-    if (test == merge_test1) return "merge_test1";
-    if (test == merge_test2) return "merge_test2";
-    if (test == mergeSort_test1) return "mergeSort_test1";
-    if (test == mergeSort_test2) return "mergeSort_test2";
-    if (test == mergeSort_test3) return "mergeSort_test3";
+    if (test == easy_test) return "easy_test";
+    if (test == medium_test) return "medium_test";
+    if (test == hard_test) return "hard_test";
+    if (test == breaker_test) return "breaker_test";
+    if (test == exception_test) return "exception_test";
 
     return "";
   }
 
   public static int runTest(int test) {
 
-    Search s = new Search();
-
-    String A[] = new String[1000];
-    int B[] = new int[1000];
+    Queue A = new Queue();
+    Queue B = new Queue();
+    int break_test_range = 10000;
 
     try {
-      if (test == merge_test1) {
-        for (int i = 0; i < A.length; i++) {
-          A[A.length - i - 1] = i + "";
+      if (test == easy_test) {
+        if (!A.isEmpty()) return 1;
+        A.enqueue(1);
+        if (A.isEmpty() || A.length() != 1) return 2;
+        A.dequeueAll();
+        if (!A.isEmpty() || !A.toString().equals("")) return 3;
+      } else if (test == medium_test) {
+        A.enqueue("test");
+        A.enqueue(123);
+        if (!A.peek().equals("test") || !A.dequeue().equals("test")) return 1;
+        A.enqueue(new Queue());
+        if (A.length() != 2) return 2;
+        if (((int) A.peek()) != 123 || ((int) A.dequeue()) != 123) return 3;
+        A.dequeueAll();
+        A.enqueue("pointer_fun");
+        A.enqueue(A.peek());
+        A.enqueue(A.dequeue());
+        if (A.dequeue() != A.dequeue() || !A.isEmpty()) return 4;
+      } else if (test == hard_test) {
+        // queueception
+        A.enqueue(new Queue());
+        // queueception loop
+        ((Queue) A.peek()).enqueue(A);
+        if (((Queue) A.peek()).peek() != A) return 1;
+        A.enqueue(A);
+        B = (Queue) A.dequeue();
+        if (A.length() != 1) return 2;
+        ((Queue) B.peek()).enqueue(B);
+        A.enqueue("123");
+        if (A.dequeue() != A) return 3;
+        ((Queue) A.peek()).dequeueAll();
+        B.enqueue("test");
+        if (!A.toString().equals("test 123")) return 4;
+      } else if (test == breaker_test) {
+        B.enqueue("PA4");
+        String str = B.toString();
+        for (int i = 0; i < break_test_range; i++) {
+          A.enqueue(B);
+          if (i < break_test_range - 1) str += " " + B.toString();
         }
-        s.merge(A, B, 0, 0, 1);
-        if (!A[0].equals("998")) return 1;
-        if (!A[2].equals("997")) return 2;
-        s.merge(A, B, 998, 998, 999);
-        if (!A[999].equals("1")) return 3;
-        if (!A[997].equals("2")) return 4;
-      } else if (test == merge_test2) {
-        for (int i = 0; i < A.length / 2; i++) {
-          A[i + A.length / 2] = i + "";
+        if (!A.toString().equals(str)) return 1;
+        if (A.length() != break_test_range) return 2;
+        for (int i = 0; i < break_test_range - 1; i++) {
+          A.dequeue();
         }
-        for (int i = 0; i < A.length / 2; i++) {
-          A[i] = i + A.length / 2 + "";
+        A.dequeueAll();
+        if (!A.isEmpty()) return 3;
+        A.enqueue(B.dequeue());
+        for (int i = 0; i < break_test_range - 1; i++) {
+          A.enqueue(A.peek());
         }
-        s.merge(A, B, 249, 499, 750);
-        if (!A[0].equals("500")) return 1;
-        if (!A[999].equals("499")) return 2;
-        if (!A[249].equals("0")) return 3;
-        if (!A[750].equals("999")) return 4;
-        for (int i = 0; i < A.length / 2; i++) {
-          A[i + A.length / 2] = i + "";
+        A.enqueue(B);
+        str += " ";
+        if (!A.toString().equals(str)) return 5;
+        A.dequeueAll();
+        if (A.length() != B.length()) return 6;
+      } else if (test == exception_test) {
+        boolean exception_caught = false;
+        try {
+          A.dequeue();
+        } catch(QueueEmptyException qe) {
+          exception_caught = true;
         }
-        for (int i = 0; i < A.length / 2; i++) {
-          A[i] = i + A.length / 2 + "";
+        if (!exception_caught) return 1;
+        try {
+          A.dequeueAll();
+        } catch(QueueEmptyException qe) {
+          exception_caught = true;
         }
-        s.merge(A, B, 0, 499, 999);
-        if (!A[0].equals("0")) return 5;
-        if (!A[999].equals("999")) return 6;
-      } else if (test == mergeSort_test1) {
-        for (int i = 0; i < A.length; i++) {
-          A[A.length - i - 1] = i + "";
+        if (!exception_caught) return 2;
+        exception_caught = false;
+        A.enqueue(1);
+        A.dequeue();
+        try {
+          A.dequeue();
+        } catch(QueueEmptyException qe) {
+          exception_caught = true;
         }
-        s.mergeSort(A, B, 0, 1);
-        if (!A[0].equals("998")) return 1;
-        if (!A[2].equals("997")) return 2;
-        s.mergeSort(A, B, 998, 999);
-        if (!A[999].equals("1")) return 3;
-        if (!A[997].equals("2")) return 4;
-      } else if (test == mergeSort_test2) {
-        for (int i = 0; i < A.length / 2; i++) {
-          A[i + A.length / 2] = i + "";
+        if (!exception_caught) return 3;
+        exception_caught = false;
+        A.enqueue(2);
+        A.peek();
+        A.enqueue(3);
+        A.dequeue();
+        A.peek();
+        A.dequeueAll();
+        try {
+          A.dequeue();
+        } catch(QueueEmptyException qe) {
+          exception_caught = true;
         }
-        for (int i = 0; i < A.length / 2; i++) {
-          A[i] = i + A.length / 2 + "";
+        if (!exception_caught) return 4;
+        exception_caught = false;
+        try {
+          A.peek();
+        } catch(QueueEmptyException qe) {
+          exception_caught = true;
         }
-        s.mergeSort(A, B, 249, 750);
-        if (!A[0].equals("500")) return 1;
-        if (!A[999].equals("499")) return 2;
-        if (!A[249].equals("0")) return 3;
-        if (!A[750].equals("999")) return 4;
-        s.mergeSort(A, B, 0, 999);
-        if (!A[0].equals("0")) return 5;
-        if (!A[999].equals("999")) return 6;
-      } else if (test == mergeSort_test3) {
-        for (int i = 0; i < A.length; i++) {
-          A[A.length - i - 1] = i + 1 + "";
-        }
-        A[51] = "makes";
-        A[50] = "Sense,";
-        A[0] = "nothing";
-        s.mergeSort(A, B, 0, 50);
-        if (!A[49].equals("Sense,")) return 1;
-        if (!A[50].equals("nothing")) return 2;
-        if (!A[51].equals("makes")) return 3;
-        s.mergeSort(A, B, 0, 999);
-        if (!A[997].equals("Sense,")) return 4;
-        if (!A[998].equals("makes")) return 5;
-        if (!A[999].equals("nothing")) return 6;
-        if (!A[996].equals("999")) return 7;
+        if (!exception_caught) return 5;
       }
     } catch (Exception e) {
       if (verbose) {
@@ -135,11 +161,11 @@ class ModelQueueTest {
     test_count = 0;
 
     // form is TESTCASE_FUNCTION
-    merge_test1 = test_count++;
-    merge_test2 = test_count++;
-    mergeSort_test1 = test_count++;
-    mergeSort_test2 = test_count++;
-    mergeSort_test3 = test_count++;
+    easy_test = test_count++;
+    medium_test = test_count++;
+    hard_test = test_count++;
+    breaker_test = test_count++;
+    exception_test = test_count++;
 
     int test_status = 0;
     int tests_passed = 0;
@@ -168,10 +194,10 @@ class ModelQueueTest {
       System.out.printf("\n\nReceiving Charity points due to an exception\n");
     }
 
-    final int maxScore = 50;
-    final int charity = 5;
+    final int maxScore = 25;
+    final int charity = 2;
 
-    int totalPoints = (maxScore - test_count * 10) + tests_passed * 10;
+    int totalPoints = (maxScore - test_count * 5) + tests_passed * 5;
     if (test_status == 255) { // your code had an exception
       totalPoints = charity;
     }
