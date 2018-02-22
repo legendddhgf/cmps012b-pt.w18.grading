@@ -36,7 +36,7 @@ class ModelQueueTest {
         A.enqueue(1);
         if (A.isEmpty() || A.length() != 1) return 2;
         A.dequeueAll();
-        if (!A.isEmpty() || !A.toString().equals("")) return 3;
+        if (!A.isEmpty() || !A.toString().trim().equals("")) return 3;
       } else if (test == medium_test) {
         A.enqueue("test");
         A.enqueue(123);
@@ -63,15 +63,15 @@ class ModelQueueTest {
         if (A.dequeue() != A) return 3;
         ((Queue) A.peek()).dequeueAll();
         B.enqueue("test");
-        if (!A.toString().equals("test 123")) return 4;
+        if (!A.toString().trim().equals("test 123")) return 4;
       } else if (test == breaker_test) {
         B.enqueue("PA4");
-        String str = B.toString();
+        String str = B.toString().trim();
         for (int i = 0; i < break_test_range; i++) {
           A.enqueue(B);
-          if (i < break_test_range - 1) str += " " + B.toString();
+          if (i < break_test_range - 1) str += " " + B.toString().trim();
         }
-        if (!A.toString().equals(str)) return 1;
+        if (!A.toString().trim().equals(str)) return 1;
         if (A.length() != break_test_range) return 2;
         for (int i = 0; i < break_test_range - 1; i++) {
           A.dequeue();
@@ -84,7 +84,7 @@ class ModelQueueTest {
         }
         A.enqueue(B);
         str += " ";
-        if (!A.toString().equals(str)) return 5;
+        if (!A.toString().trim().equals(str)) return 5;
         A.dequeueAll();
         if (A.length() != B.length()) return 6;
       } else if (test == exception_test) {
