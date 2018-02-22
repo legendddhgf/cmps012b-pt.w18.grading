@@ -65,7 +65,7 @@ for NUM in $(seq 1 $NUMTESTS); do
     let simulationtestspassed+=1
   fi
 
-  rm -f infile$NUM* *rpt$NUM* *trc$NUM* diff*$NUM
+  rm -f infile$NUM* *rpt$NUM* *trc$NUM* diff*$NUM*
 
 done
 
