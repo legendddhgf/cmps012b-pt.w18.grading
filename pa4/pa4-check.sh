@@ -102,3 +102,7 @@ cat QueueTest-out.txt
 rm -f *out.txt
 
 rm -f *.class ModelQueueTest* garbage*
+
+for NUM in $(seq 1 $NUMTESTS); do
+  rm -f infile$NUM.txt infile$NUM.txt.rpt infile$NUM.txt.trc model-rpt$NUM.txt model-trc$NUM.txt diff$NUM.txt
+done
