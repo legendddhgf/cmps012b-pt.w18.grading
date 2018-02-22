@@ -65,7 +65,7 @@ for NUM in $(seq 1 $NUMTESTS); do
     let simulationtestspassed+=1
   fi
 
-  rm -f infile$NUM *outfile$NUM* diff*$NUM
+  rm -f infile$NUM.txt *.rpt *.trc diff*$NUM* model-rpt$NUM.txt model-trc$NUM.txt
 
 done
 
@@ -102,7 +102,3 @@ cat QueueTest-out.txt
 rm -f *out.txt
 
 rm -f *.class ModelQueueTest* garbage*
-
-for NUM in $(seq 1 $NUMTESTS); do
-  rm -f infile$NUM.txt infile$NUM.txt.rpt infile$NUM.txt.trc model-rpt$NUM.txt model-trc$NUM.txt diff$NUM.txt
-done
