@@ -1,9 +1,6 @@
 Report file: infile10.txt.rpt
-5 Jobs:
-(0, 10, *) (10, 100, *) (10, 100, *) (12, 100, *) (12, 98, *) 
+2 Jobs:
+(6, 94, *) (80, 20, *)
 
 ***********************************************************
-1 processor: totalWait=596, maxWait=298, averageWait=119.20
-2 processors: totalWait=196, maxWait=98, averageWait=39.20
-3 processors: totalWait=98, maxWait=98, averageWait=19.60
-4 processors: totalWait=0, maxWait=0, averageWait=0.00
+1 processor: totalWait=20, maxWait=20, averageWait=10.00
