@@ -83,7 +83,8 @@ class ModelQueueTest {
           A.enqueue(A.peek());
         }
         A.enqueue(B);
-        str += " ";
+        // this line causes an issue because what is being compared is trimmed
+        //str += " ";
         if (!A.toString().trim().equals(str)) return 5;
         A.dequeueAll();
         if (A.length() != B.length()) return 6;
