@@ -62,30 +62,34 @@ class ModelQueueTest {
         A.enqueue("123");
         if (A.dequeue() != A) return 3;
         ((Queue) A.peek()).dequeueAll();
+        A.enqueue("123");
+        A.enqueue(A.dequeue());
         B.enqueue("test");
-        if (!A.toString().trim().equals("test 123")) return 4;
+        A.dequeue();
+        if (!A.toString().trim().equals("123 test")) return 4;
       } else if (test == breaker_test) {
         B.enqueue("PA4");
-        String str = B.toString().trim();
+        String str = B.toString();
         for (int i = 0; i < break_test_range; i++) {
           A.enqueue(B);
-          if (i < break_test_range - 1) str += " " + B.toString().trim();
+          if (i < break_test_range - 1) str += " " + B.toString();
         }
-        if (!A.toString().trim().equals(str)) return 1;
+        if (!A.toString().trim().equals(str.trim())) return 1;
         if (A.length() != break_test_range) return 2;
         for (int i = 0; i < break_test_range - 1; i++) {
           A.dequeue();
         }
         A.dequeueAll();
         if (!A.isEmpty()) return 3;
+        str = B.peek().toString();
         A.enqueue(B.dequeue());
         for (int i = 0; i < break_test_range - 1; i++) {
           A.enqueue(A.peek());
+          str += " " + A.peek().toString();
         }
         A.enqueue(B);
-        // this line causes an issue because what is being compared is trimmed
-        //str += " ";
-        if (!A.toString().trim().equals(str)) return 5;
+        str += " " + B.toString();
+        if (!A.toString().trim().equals(str.trim())) return 5;
         A.dequeueAll();
         if (A.length() != B.length()) return 6;
       } else if (test == exception_test) {
