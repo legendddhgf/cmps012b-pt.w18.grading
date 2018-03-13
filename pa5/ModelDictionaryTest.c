@@ -152,7 +152,7 @@ uint8_t runTest(Dictionary *pA, Dictionary *pB, int test) {
         printDictionary(out, A);
         fclose(out);
         in = fopen("print_test.txt", "r"); // for reading
-        char str[10001], temp[257];
+        char str[1001], temp[257];
         str[0] = '\0';
         temp[256] = '\0';
         while(fgets(temp, 256, in)) {
