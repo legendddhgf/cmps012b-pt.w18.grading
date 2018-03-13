@@ -14,7 +14,7 @@ curl $SRCDIR/ModelDictionaryTest.c > ModelDictionaryTest.c
 echo "Press Enter To Continue with DictionaryTest Results"
 read verbose
 
-gcc -std=c99 -Wall ModelDictionaryTest.c Dictionary.c -o ModelDictionaryTest > garbage &>> garbage
+gcc -std=c99 -Wall -g ModelDictionaryTest.c Dictionary.c -o ModelDictionaryTest > garbage &>> garbage
 cat garbage
 
 timeout 5 valgrind ./ModelDictionaryTest -v > DictionaryTest-out.txt &>> DictionaryTest-out.txt
