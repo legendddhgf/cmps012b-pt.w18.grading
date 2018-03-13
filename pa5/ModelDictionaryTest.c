@@ -39,7 +39,7 @@ void strtrim(char *str) {
     index--;
   }
   if (index < 0) index = 0;
-  //if (str[index] != '\0' && !isspace(str[index])) index++;
+  else if (str[index] != '\0' && !isspace(str[index])) index++;
   str[index] = '\0';
 }
 
