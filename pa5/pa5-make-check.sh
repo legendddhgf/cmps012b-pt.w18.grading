@@ -10,7 +10,7 @@ fi
 
 cp *.c *.h Makefile backup   # copy all files of importance into backup
 
-curl $SRCDIR/ModelDictionaryTest.java > ModelDictionaryTest.java
+curl $SRCDIR/ModelDictionaryTest.c > ModelDictionaryTest.c
 
 echo ""
 echo ""
