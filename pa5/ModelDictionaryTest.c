@@ -152,6 +152,7 @@ uint8_t runTest(Dictionary *pA, Dictionary *pB, int test) {
         insert(B, "aa", "aa");
         printDictionary(out, A);
         fclose(out);
+        for (int i = 0; i < 1000; i++); //some IO delay
         in = fopen("print_test.txt", "r"); // for reading
         char str[1001], temp[257];
         str[0] = '\0';
@@ -183,6 +184,7 @@ uint8_t runTest(Dictionary *pA, Dictionary *pB, int test) {
 
         printDictionary(out, B);
         fclose(out);
+        for (int i = 0; i < 1000; i++); //some IO delay
         in = fopen("print_test.txt", "r"); // for reading
         while(fgets(temp, 256, in)) {
           strcat(str, temp);
