@@ -24,6 +24,10 @@ if [ ! -e DictionaryClient ] || [ ! -x DictionaryClient ]; then # exist and exec
   rm -f *.o
   gcc -std=c99 -Wall *.c -o DictionaryClient >> garbage &>> garbage
   cat garbage
+else
+  echo ""
+  echo "Makefile seems operational"
+  echo ""
 fi
 
 echo ""
