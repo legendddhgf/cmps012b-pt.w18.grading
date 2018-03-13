@@ -35,10 +35,11 @@ enum Test_e {
 
 void strtrim(char *str) {
   int index = strlen(str) - 1;
-  while (index > 0 && isspace(str[index])) {
+  while (index >= 0 && isspace(str[index])) {
     index--;
   }
-  if (str[index] != '\0' && !isspace(str[index])) index++;
+  if (index < 0) index = 0;
+  //if (str[index] != '\0' && !isspace(str[index])) index++;
   str[index] = '\0';
 }
 
