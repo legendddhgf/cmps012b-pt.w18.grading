@@ -13,4 +13,5 @@ chmod +x $EXE1
 chmod +x $EXE2
 ./$EXE1
 ./$EXE2
-rm -f $EXE[12]
+rm -f $EXE1
+rm -f $EXE2

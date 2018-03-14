@@ -230,7 +230,7 @@ void end_program(uint8_t argc) {
     printf("\nRecieving charity points for a premature program end\n");
   }
 
-  printf("\nYou will receive %d out of %d possible points on the GraphTest\n\n",
+  printf("\nYou will receive %d out of %d possible points on the Hashtable Dictionary\n\n",
       totalScore, MAXSCORE);
 
   exit(0);
@@ -238,7 +238,7 @@ void end_program(uint8_t argc) {
 
 int main (int argc, char **argv) {
   if (argc > 2 || (argc == 2 && strcmp(argv[1], "-v") != 0)) {
-    printf("Usage: %s [-v]", (argc > 0 ? argv[0] : "./GraphTest"));
+    printf("Usage: %s [-v]", (argc > 0 ? argv[0] : "./ModelDictionaryTest"));
     exit(1);
   }
 
