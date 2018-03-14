@@ -17,7 +17,7 @@ read verbose
 gcc -std=c99 -Wall -g ModelDictionaryTest.c Dictionary.c -o ModelDictionaryTest > garbage &>> garbage
 cat garbage
 
-timeout 5 valgrind ./ModelDictionaryTest -v > DictionaryTest-out.txt &>> DictionaryTest-out.txt
+timeout 5 valgrind --leak-check=full ./ModelDictionaryTest -v > DictionaryTest-out.txt &>> DictionaryTest-out.txt
 cat DictionaryTest-out.txt
 
 rm -f *out.txt
