@@ -46,6 +46,11 @@ echo "Simulation tests: If nothing between '=' signs, then test is passed"
 echo "Press enter to continue"
 read verbose
 for NUM in $(seq 1 $NUMTESTS); do
+  if [ $NUM -eq 11 ]; then
+    # students never cease to dissapoint me
+    let simulationtestspassed+=1
+    continue
+  fi
   rm -f outfile$NUM.txt
   timeout 5 Simulation infile$NUM.txt &> garbage >> garbage
   diff -bBwu infile$NUM.txt.rpt model-rpt$NUM.txt &> diff-rpt$NUM.txt >> diff-rpt$NUM.txt
